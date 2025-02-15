@@ -1,6 +1,7 @@
 - name: install vlc
   hosts: all
   remote_user: "{{ssh_user}}"
+  gather_facts: no
   tasks:
 #---------------------------------------------------------------------------------------------
   - name: ensure 'vlc' is at the latest version

@@ -1,6 +1,7 @@
 - name: install hashcat
   hosts: all
   remote_user: "{{ssh_user}}"
+  gather_facts: no
   tasks:
 #---------------------------------------------------------------------------------------------
   - name: ensure 'hashcat' is at the latest version

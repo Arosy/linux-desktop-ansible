@@ -1,6 +1,7 @@
 - name: setup bash aliases
   hosts: all
   remote_user: "{{ssh_user}}"
+  gather_facts: no
   tasks:
 #---------------------------------------------------------------------------------------------
   - name: add 'bb2h' shortcut to aliases

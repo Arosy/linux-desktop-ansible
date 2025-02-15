@@ -1,6 +1,7 @@
 - name: install exiled exchange 2
   hosts: all
   remote_user: "{{ssh_user}}"
+  gather_facts: no
   tasks:
 #---------------------------------------------------------------------------------------------
   - name: checking if '/opt/exiled-exchange-2' exists

@@ -1,6 +1,7 @@
 - name: install balena etcher
   hosts: all
   remote_user: "{{ssh_user}}"
+  gather_facts: no
   tasks:
 #---------------------------------------------------------------------------------------------
   - name: ensure 'libgdk-pixbuf2.0-0' is at the latest version

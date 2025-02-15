@@ -1,6 +1,7 @@
 - name: install slack
   hosts: all
   remote_user: "{{ssh_user}}"
+  gather_facts: no
   tasks:
 #---------------------------------------------------------------------------------------------
   - name: download 'slack-desktop-4.41.105-amd64.deb'

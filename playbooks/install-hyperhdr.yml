@@ -1,6 +1,7 @@
 - name: install HyperHDR
   hosts: all
   remote_user: "{{ssh_user}}"
+  gather_facts: no
   tasks:
 #---------------------------------------------------------------------------------------------
   - name: "download package: 'HyperHDR-20.0.0.0.noble-x86_64.deb'"

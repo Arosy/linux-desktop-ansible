@@ -1,6 +1,7 @@
 - name: remove obsolete software
   hosts: all
   remote_user: "{{ssh_user}}"
+  gather_facts: no
   tasks:
 #---------------------------------------------------------------------------------------------
   - name: remove 'vim' package

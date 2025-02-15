@@ -1,6 +1,7 @@
 - name: install konsave and make backup of KDE
   hosts: all
   remote_user: "{{ssh_user}}"
+  gather_facts: no
   tasks:
 #---------------------------------------------------------------------------------------------
   - name: checking if '/home/{{ssh_user}}/anaconda3/envs/konsave' exists

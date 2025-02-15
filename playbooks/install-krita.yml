@@ -1,6 +1,7 @@
 - name: install krita
   hosts: all
   remote_user: "{{ssh_user}}"
+  gather_facts: no
   tasks:
 #---------------------------------------------------------------------------------------------
   - name: ensure 'krita' is at the latest version

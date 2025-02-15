@@ -1,6 +1,7 @@
 - name: install docker with compose plugin
   hosts: all
   remote_user: "{{ssh_user}}"
+  gather_facts: no
   tasks:
   - name: upgrade installed apt packages
     become: true

@@ -1,6 +1,7 @@
 - name: install kicad
   hosts: all
   remote_user: "{{ssh_user}}"
+  gather_facts: no
   tasks:
 #---------------------------------------------------------------------------------------------
   - name: "add 'ppa:kicad/kicad-8.0-releases' repository"

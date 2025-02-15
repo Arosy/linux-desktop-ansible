@@ -1,6 +1,7 @@
 - name: install netcore sdk
   hosts: all
   remote_user: "{{ssh_user}}"
+  gather_facts: no
   tasks:
 #---------------------------------------------------------------------------------------------
   - name: ensure 'dotnet-sdk-9.0' is at the latest version

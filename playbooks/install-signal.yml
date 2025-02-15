@@ -1,6 +1,7 @@
 - name: install signal-desktop
   hosts: all
   remote_user: "{{ssh_user}}"
+  gather_facts: no
   tasks:
 #---------------------------------------------------------------------------------------------
   - name: installing signal-desktop via snap
