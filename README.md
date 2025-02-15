@@ -38,5 +38,6 @@ Its possible to register the following new terminal commands:
 - bb4h
 - bb6h
 - bb8h
+
 These will shutdown your system in X hours. Where X corresponds to the numerical value of the bbXh command you've issued.
 
