@@ -99,3 +99,8 @@ zerotier_network=my_16_digits_network
 ## a specific host.
 zerotier_ping_host=127.0.0.1
 zerotier_ping_port=22
+
+#-------------------------
+## PATH OF EXILE 2 - TOOLS
+#-------------------------
+install_poe2_exchange=0
