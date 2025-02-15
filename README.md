@@ -1,6 +1,5 @@
 # linux-desktop-ansible
-A small script based installer to allow the easy configuration of software usually used on Windows prior.
-
+This repository was created for people who want to easily configure their Linux Desktop. For myself this was when i decided that i want to migrate away from Windows, but without having the pain to install, configure and troubleshoot all the required software over and over again. This installer is based on ansible which utilizies playbooks written in YAML.
 
 # Usage
 ## Preparations
@@ -28,7 +27,7 @@ Options set to **0 will be skipped** and set to **1 will be installed**, however
 ## Execution
 When all the adjustments are done you can simply run:
 
-`./run-ansible.sh MY_INVENTORY_FILE_NAME'
+`./run-ansible.sh MY_INVENTORY_FILE_NAME`
 
 all needed by now is that you provide your password which should be the same as when you use sudo.
 
