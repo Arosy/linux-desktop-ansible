@@ -1,0 +1,22 @@
+- name: install kicad
+  hosts: all
+  remote_user: "{{ssh_user}}"
+  tasks:
+#---------------------------------------------------------------------------------------------
+  - name: "add 'ppa:kicad/kicad-8.0-releases' repository"
+    become: true
+    become_method: sudo
+    command: add-apt-repository --yes ppa:kicad/kicad-8.0-releases
+    when: install_kicad == 1
+#---------------------------------------------------------------------------------------------
+  - name: "update repository cache"
+    become: true
+    become_method: sudo
+    command: apt update
+    when: install_kicad == 1
+#---------------------------------------------------------------------------------------------
+  - name: "install kicad"
+    become: true
+    become_method: sudo
+    command: apt install --install-recommends kicad -yq
+    when: install_kicad == 1

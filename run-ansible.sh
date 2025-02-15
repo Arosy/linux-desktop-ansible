@@ -26,6 +26,7 @@ ansible-playbook --inventory-file ../inv/$1 install-amdgpu.yml \
 											install-krita.yml \
 											install-lutris.yml \
 											install-hashcat.yml \
+											install-kicad.yml \
 											setup-bash-aliases.yml \
 											setup-bash-bb-commands.yml \
                                             --ask-pass --ask-become-pass

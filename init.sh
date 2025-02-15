@@ -9,6 +9,9 @@ ssh-keyscan -H localhost >> ~/.ssh/known_hosts
 
 if [ ! -d "./inv" ]; then
   mkdir -p ./inv
+fi
+
+if [ ! -f "./inv/example" ]; then
   cp -f ./example ./inv/example
 fi
 
