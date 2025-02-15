@@ -27,6 +27,7 @@ ansible-playbook --inventory-file ../inv/$1 install-amdgpu.yml \
 											install-lutris.yml \
 											install-hashcat.yml \
 											install-kicad.yml \
+											install-hyperhdr.yml \
 											setup-bash-aliases.yml \
 											setup-bash-bb-commands.yml \
                                             --ask-pass --ask-become-pass

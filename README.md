@@ -41,3 +41,5 @@ Its possible to register the following new terminal commands:
 
 These will shutdown your system in X hours. Where X corresponds to the numerical value of the bbXh command you've issued.
 
+## HyperHDR
+When you start the application, you may notice that it will not spawn a GUI application but rather runs a daemon in the background. So you have to open your webbrowser and navigate to [HyperHDR Configuration UI](http://localhost:8090) for configuration.

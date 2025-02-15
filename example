@@ -52,6 +52,7 @@ install_etcher=0                    ## Very similar to rpi imager, but from bale
 install_docker=0                    ## Used to run containers / containerized apps on your system.
 install_krita=0                     ## A photo editing software which is similar to photoshop. God bless its not gimp.
 install_kicad=0                     ##
+install_hyperhdr=0                  ## Open source ambient lighting implementation for television and music sets based on the video and audio streams analysis.
 
 #-------------------------
 ## networking
