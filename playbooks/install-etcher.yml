@@ -1,0 +1,32 @@
+- name: install balena etcher
+  hosts: all
+  remote_user: "{{ssh_user}}"
+  tasks:
+#---------------------------------------------------------------------------------------------
+  - name: ensure 'libgdk-pixbuf2.0-0' is at the latest version
+    become: true
+    become_method: sudo
+    apt:
+      name: libgdk-pixbuf2.0-0
+      state: latest
+    when: install_etcher == 1
+#---------------------------------------------------------------------------------------------
+  - name: download 'balena-etcher_1.19.25_amd64.deb'
+    command: "wget https://github.com/balena-io/etcher/releases/download/v1.19.25/balena-etcher_1.19.25_amd64.deb"
+    args:
+      chdir: "/home/{{ssh_user}}"
+    when: install_etcher == 1
+#---------------------------------------------------------------------------------------------
+  - name: install 'balena-etcher_1.19.25_amd64.deb'
+    become: true
+    become_method: sudo
+    command: "dpkg -i balena-etcher_1.19.25_amd64.deb"
+    args:
+      chdir: "/home/{{ssh_user}}"
+    when: install_etcher == 1
+#---------------------------------------------------------------------------------------------
+  - name: remove 'balena-etcher_1.19.25_amd64.deb'
+    command: "rm -f balena-etcher_1.19.25_amd64.deb"
+    args:
+      chdir: "/home/{{ssh_user}}"
+    when: install_etcher == 1

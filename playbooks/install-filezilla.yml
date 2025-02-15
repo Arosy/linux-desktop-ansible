@@ -1,0 +1,38 @@
+- name: install filezilla ftp client
+  hosts: all
+  remote_user: "{{ssh_user}}"
+  tasks:
+#---------------------------------------------------------------------------------------------
+  - name: ensure 'filezilla' is at the latest version
+    become: true
+    become_method: sudo
+    apt:
+      name: filezilla
+      state: latest
+    when: install_filezilla == 1
+#---------------------------------------------------------------------------------------------
+  - name: copy '../migrations/filezilla.zip' to target machine (if exist)
+    copy:
+      src: ../migrations/filezilla.zip
+      dest: /home/{{ssh_user}}/filezilla.zip
+      follow: no
+    ignore_errors: True
+    when: install_filezilla == 1
+#---------------------------------------------------------------------------------------------
+  - name: checking if '/home/{{ssh_user}}/filezilla.zip' exists
+    stat:
+      path: "/home/{{ssh_user}}/filezilla.zip"
+    register: backup_file
+    when: install_filezilla == 1
+#---------------------------------------------------------------------------------------------
+  - name: copy filezilla migration to target machine
+    command: unzip -o ./filezilla.zip -d ./.config/filezilla/
+    args:
+      chdir: /home/{{ssh_user}}
+    when: install_filezilla == 1 and backup_file.stat.exists
+#---------------------------------------------------------------------------------------------
+  - name: removing migration archive '/home/{{ssh_user}}/filezilla.zip'
+    command: rm -f ./filezilla.zip
+    args:
+      chdir: /home/{{ssh_user}}
+    when: install_filezilla == 1 and backup_file.stat.exists

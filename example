@@ -1,0 +1,99 @@
+#-------------------------
+[all]
+localhost
+#-------------------------
+## the block below contains various configurable variables for the setup procedure,
+## to find out whats possible and how to tweak each configuration, please check the
+## documentation located near the settings itself or its block description.
+#-------------------------
+[all:vars]
+#-------------------------
+## the most generic settings which probably won't require much of an introduction, but
+## they are still very important and should therefore be at the top for easy access.
+#-------------------------
+## the remote ssh user which is used for authentification and determining the home location.
+ssh_user="arosy"
+
+
+#-------------------------
+## DRIVERS
+#-------------------------
+## amd radeon driver: 6.2.60203-1
+install_amdgpu=0                    ## Installs the GPU Display Driver for almost all modern AMD GPU's
+install_amdrocr=0                   ## Optionally you can configure your graphics driver to include rocr, which allows you to utilize ai workloads on your gpu instead of cpu only.
+install_winehq=0                    ##
+
+#-------------------------
+## GAME LAUNCHERS
+#-------------------------
+install_lutris=0                    ## Multipurpose Game Launcher which adds enhancend compatibility for Ubisoft, EA, GOG and some other aswell.
+install_steam=0                     ## The Steam Gaming Platform
+
+#-------------------------
+## RUNTIMES
+#-------------------------
+install_netcore_runtime=0           ## .NET Runtime 8 which is required for some apps to work properly.
+
+#-------------------------
+## DEVELOPMENT
+#-------------------------
+install_netcore_sdk=0               ## .NET SDK 8
+install_arduino=0                   ## IDE to program / flash esp32, arduinos and many other micro controllers.
+install_vscode=0                    ## A Cross Platform Editor / Mini IDE made by Microsoft
+install_git=0                       ## Git is king.
+
+#-------------------------
+## tools
+#-------------------------
+install_filezilla=0                 ## A popular windows ftp client
+install_rpi_imager=0                ## Used to flash images to raspberries and other sbcs.
+install_konsave=0                   ##
+install_etcher=0                    ## Very similar to rpi imager, but from balena.
+install_docker=0                    ## Used to run containers / containerized apps on your system.
+install_krita=0                     ## A photo editing software which is similar to photoshop. God bless its not gimp.
+
+#-------------------------
+## networking
+#-------------------------
+install_zerotier=0                  ##
+install_nmap=0                      ## Utility which is used for a wide range of tasks such as network scanning.
+
+#-------------------------
+## MULTIMEDIA
+#-------------------------
+install_vlc=0                       ##
+
+#-------------------------
+## COMMUNICATION
+#-------------------------
+install_discord=0                   ## Cross platform messenger used by many people.
+install_signal=0                    ## A secure messenger used to exchange messages similar to whatsapp.
+install_slack=0                     ## A business messenger used primarily for work related chats. https://slack.com
+
+#-------------------------
+## MISC
+#-------------------------
+install_gamescope=0                 ## WIP
+
+#-------------------------
+## IT SECURITY
+#-------------------------
+install_hashcat=0                   ##
+
+#-------------------------
+## BASH COMMANDS
+#-------------------------
+setup_bash_aliases=0                ## See README.md where bash commands are explained, if they are configured.
+setup_bash_bb_commands=0            ## A set of small shutdown commands used to plan shutdowns beforehand in an easy way.
+
+#-------------------------
+## ZEROTIER ADVANCED CONFIGURATION
+#-------------------------
+## Optionally join a private network which is managed by you or the
+## zerotier central.
+zerotier_auto_join=0
+zerotier_network=my_16_digits_network
+## in some scenarios it could be necessary to await connectivity against
+## a specific host.
+zerotier_ping_host=127.0.0.1
+zerotier_ping_port=22

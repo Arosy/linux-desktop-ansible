@@ -1,0 +1,24 @@
+- name: install slack
+  hosts: all
+  remote_user: "{{ssh_user}}"
+  tasks:
+#---------------------------------------------------------------------------------------------
+  - name: download 'slack-desktop-4.41.105-amd64.deb'
+    command: "wget https://downloads.slack-edge.com/desktop-releases/linux/x64/4.41.105/slack-desktop-4.41.105-amd64.deb"
+    args:
+      chdir: "/home/{{ssh_user}}"
+    when: install_slack == 1
+#---------------------------------------------------------------------------------------------
+  - name: ensure 'wine-stable' is at the latest version
+    become: true
+    become_method: sudo
+    command: "dpkg -i slack-desktop-4.41.105-amd64.deb"
+    args:
+      chdir: "/home/{{ssh_user}}"
+    when: install_slack == 1
+#---------------------------------------------------------------------------------------------
+  - name: remove 'slack-desktop-4.41.105-amd64.deb'
+    command: "rm -f slack-desktop-4.41.105-amd64.deb"
+    args:
+      chdir: "/home/{{ssh_user}}"
+    when: install_slack == 1

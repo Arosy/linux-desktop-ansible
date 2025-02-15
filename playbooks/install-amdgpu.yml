@@ -1,0 +1,64 @@
+- name: install amdgpu
+  hosts: all
+  remote_user: "{{ssh_user}}"
+  tasks:
+#---------------------------------------------------------------------------------------------
+  - name: checking if 'amdgpu' driver is installed
+    become: true
+    become_method: sudo
+    shell: lspci -k | grep -EA3 'VGA|3D|Display'
+    register: has_driver
+    when: install_amdgpu == 1
+#---------------------------------------------------------------------------------------------
+  - name: ensure 'wget' is at the latest version
+    become: true
+    become_method: sudo
+    apt:
+      name: wget
+      state: latest
+    when: install_amdgpu == 1 and not has_driver.stdout is search('amdgpu')
+#---------------------------------------------------------------------------------------------
+  - name: download 'amdgpu-install_6.2.60203-1_all.deb'
+    command: wget https://repo.radeon.com/amdgpu-install/6.2.3/ubuntu/jammy/amdgpu-install_6.2.60203-1_all.deb
+    when: install_amdgpu == 1 and not has_driver.stdout is search('amdgpu')
+#---------------------------------------------------------------------------------------------
+  - name: install 'amdgpu-install_6.2.60203-1_all.deb'
+    become: true
+    become_method: sudo
+    command: apt-get install ./amdgpu-install_6.3.60302-1_all.deb
+    when: install_amdgpu == 1 and not has_driver.stdout is search('amdgpu')
+#---------------------------------------------------------------------------------------------
+  - name: update package cache
+    become: true
+    become_method: sudo
+    command: apt-get update
+    when: install_amdgpu == 1 and not has_driver.stdout is search('amdgpu')
+#---------------------------------------------------------------------------------------------
+  - name: install the gpu driver
+    become: true
+    become_method: sudo
+    command: amdgpu-install -y --usecase=graphics --vulkan=pro --accept-eula
+    when: install_amdgpu == 1 and not has_driver.stdout is search('amdgpu')
+#---------------------------------------------------------------------------------------------
+  - name: checking if Resizeable BAR is enabled
+    become: true
+    become_method: sudo
+    shell: lspci -vv|grep BAR
+    register: has_rebar
+    when: install_amdgpu == 1 and install_amdrocr == 1
+#---------------------------------------------------------------------------------------------
+  - name: ensure 'rocr' is installed through amdgpu installer
+    become: true
+    become_method: sudo
+    command: "amdgpu-install -y --opencl=rocr --no-dkms --no-32"
+    when: install_amdgpu == 1 and install_amdrocr == 1
+#---------------------------------------------------------------------------------------------
+  - name: checking if './amdgpu-install_6.2.60203-1_all.deb' exists
+    stat:
+      path: "amdgpu-install_6.2.60203-1_all.deb"
+    register: has_driver_file
+    when: install_amdgpu == 1
+#---------------------------------------------------------------------------------------------
+  - name: remove 'amdgpu-install_6.2.60203-1_all.deb' installer package
+    command: rm -f ./amdgpu-install_6.2.60203-1_all.deb
+    when: install_amdgpu == 1 and has_driver_file.stat.exists

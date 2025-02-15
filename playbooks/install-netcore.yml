@@ -1,0 +1,20 @@
+- name: install netcore sdk
+  hosts: all
+  remote_user: "{{ssh_user}}"
+  tasks:
+#---------------------------------------------------------------------------------------------
+  - name: ensure 'dotnet-sdk-9.0' is at the latest version
+    become: true
+    become_method: sudo
+    apt:
+      name: dotnet-sdk-9.0
+      state: latest
+    when: install_netcore_sdk == 1
+#---------------------------------------------------------------------------------------------
+  - name: ensure 'aspnetcore-runtime-9.0' is at the latest version
+    become: true
+    become_method: sudo
+    apt:
+      name: aspnetcore-runtime-9.0
+      state: latest
+    when: install_netcore_runtime == 1

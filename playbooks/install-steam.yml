@@ -1,0 +1,10 @@
+- name: install steam
+  hosts: all
+  remote_user: "{{ssh_user}}"
+  tasks:
+#---------------------------------------------------------------------------------------------
+  - name: ensure 'steam' is at the latest version
+    become: true
+    become_method: sudo
+    command: "snap install steam"
+    when: install_steam == 1

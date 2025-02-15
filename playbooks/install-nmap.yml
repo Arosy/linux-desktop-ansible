@@ -1,0 +1,10 @@
+- name: install nmap
+  hosts: all
+  remote_user: "{{ssh_user}}"
+  tasks:
+#---------------------------------------------------------------------------------------------
+  - name: ensure 'nmap' is at the latest version
+    become: true
+    become_method: sudo
+    command: "snap install nmap"
+    when: install_nmap == 1

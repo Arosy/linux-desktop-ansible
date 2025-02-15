@@ -1,0 +1,27 @@
+- name: install lutris
+  hosts: all
+  remote_user: "{{ssh_user}}"
+  tasks:
+#---------------------------------------------------------------------------------------------
+  - name: ensure 'wget' is at the latest version
+    become: true
+    become_method: sudo
+    apt:
+      name: wget
+      state: latest
+    when: install_lutris == 1
+#---------------------------------------------------------------------------------------------
+  - name: download 'lutris_0.5.18_all.deb'
+    command: "wget https://github.com/lutris/lutris/releases/download/v0.5.18/lutris_0.5.18_all.deb"
+    register: zerotier_install_script
+    when: install_lutris == 1
+#---------------------------------------------------------------------------------------------
+  - name: configure 'lutris_0.5.18_all.deb' package
+    become: true
+    become_method: sudo
+    command: "apt install ./lutris_0.5.18_all.deb"
+    when: install_lutris == 1
+#---------------------------------------------------------------------------------------------
+  - name: remove './lutris_0.5.18_all.deb'
+    command: "rm -f ./lutris_0.5.18_all.deb"
+    when: install_lutris == 1

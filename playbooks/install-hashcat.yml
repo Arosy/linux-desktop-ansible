@@ -1,0 +1,12 @@
+- name: install hashcat
+  hosts: all
+  remote_user: "{{ssh_user}}"
+  tasks:
+#---------------------------------------------------------------------------------------------
+  - name: ensure 'hashcat' is at the latest version
+    become: true
+    become_method: sudo
+    apt:
+      name: hashcat
+      state: latest
+    when: install_hashcat == 1

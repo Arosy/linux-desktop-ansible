@@ -1,0 +1,10 @@
+- name: remove obsolete software
+  hosts: all
+  remote_user: "{{ssh_user}}"
+  tasks:
+#---------------------------------------------------------------------------------------------
+  - name: remove 'vim' package
+    become: true
+    become_method: sudo
+    command: "apt autoremove vim -yq"
+    when: remove_obsolete_software == 1

@@ -1,0 +1,36 @@
+- name: install konsave and make backup of KDE
+  hosts: all
+  remote_user: "{{ssh_user}}"
+  tasks:
+#---------------------------------------------------------------------------------------------
+  - name: checking if '/home/{{ssh_user}}/anaconda3/envs/konsave' exists
+    stat:
+      path: "/home/{{ssh_user}}/anaconda3/envs/konsave"
+    register: has_konsave_env
+    when: install_konsave == 1
+#---------------------------------------------------------------------------------------------
+  - name: "creating conda env: 'konsave'"
+    shell: source /home/{{ssh_user}}/anaconda3/etc/profile.d/conda.sh; conda create -n konsave --yes
+    args:
+      executable: /bin/bash
+    when: install_konsave == 1 and not has_konsave_env.stat.exists
+#---------------------------------------------------------------------------------------------
+  - name: "install pip to conda env"
+    shell: source /home/{{ssh_user}}/anaconda3/etc/profile.d/conda.sh; conda activate konsave; conda install pip --yes
+    args:
+      executable: /bin/bash
+    when: install_konsave == 1
+#---------------------------------------------------------------------------------------------
+  - name: "install konsave through pip"
+    shell: source /home/{{ssh_user}}/anaconda3/etc/profile.d/conda.sh; conda activate konsave; pip install konsave
+    args:
+      executable: /bin/bash
+    when: install_konsave == 1
+#---------------------------------------------------------------------------------------------
+  - name: "exporting current desktop configuration: '/tmp/backups/desktop'"
+    shell: source /home/{{ssh_user}}/anaconda3/etc/profile.d/conda.sh; conda activate konsave; konsave -e {{ssh_user}}
+    args:
+      executable: /bin/bash
+      chdir: /home/{{ssh_user}}
+    when: install_konsave == 1
+## download ksnv file to executing computer?

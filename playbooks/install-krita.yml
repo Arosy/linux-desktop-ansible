@@ -1,0 +1,10 @@
+- name: install krita
+  hosts: all
+  remote_user: "{{ssh_user}}"
+  tasks:
+#---------------------------------------------------------------------------------------------
+  - name: ensure 'krita' is at the latest version
+    become: true
+    become_method: sudo
+    command: "snap install krita"
+    when: install_krita == 1

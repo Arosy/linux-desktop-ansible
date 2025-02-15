@@ -1,0 +1,44 @@
+- name: install arduino IDE
+  hosts: all
+  remote_user: "{{ssh_user}}"
+  tasks:
+#---------------------------------------------------------------------------------------------
+  - name: ensure 'libfuse2' is at the latest version
+    become: true
+    become_method: sudo
+    apt:
+      name: libfuse2
+      state: latest
+    when: install_arduino == 1
+#---------------------------------------------------------------------------------------------
+  - name: download 'arduino-ide_2.3.4_Linux_64bit.AppImage'
+    command: "wget https://downloads.arduino.cc/arduino-ide/arduino-ide_2.3.4_Linux_64bit.AppImage"
+    args:
+      chdir: "/home/{{ssh_user}}"
+    when: install_arduino == 1
+#---------------------------------------------------------------------------------------------
+  - name: copy 'arduino-ide_2.3.4_Linux_64bit.AppImage' to '/usr/bin/'
+    become: true
+    become_method: sudo
+    command: "mv arduino-ide_2.3.4_Linux_64bit.AppImage /usr/bin/arduino_2.3.4.AppImage"
+    args:
+      chdir: "/home/{{ssh_user}}"
+    when: install_arduino == 1
+#---------------------------------------------------------------------------------------------
+  - name: make '/usr/bin/arduino_2.3.4.AppImage' executable
+    become: true
+    become_method: sudo
+    command: "chmod +x /usr/bin/arduino_2.3.4.AppImage"
+    when: install_arduino == 1
+#---------------------------------------------------------------------------------------------
+  - name: checking if '/usr/bin/arduino' exists
+    stat:
+      path: "/usr/bin/arduino"
+    register: is_arduino_installed
+    when: install_arduino == 1
+#---------------------------------------------------------------------------------------------
+  - name: link arduino binary
+    become: true
+    become_method: sudo
+    command: "ln -s /usr/bin/arduino_2.3.4.AppImage /usr/bin/arduino"
+    when: install_arduino == 1 and not is_arduino_installed.stat.exists

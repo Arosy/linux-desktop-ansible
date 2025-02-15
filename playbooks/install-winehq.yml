@@ -1,0 +1,41 @@
+- name: install wine-stable from winehq
+  hosts: all
+  remote_user: "{{ssh_user}}"
+  tasks:
+  - name: upgrade installed apt packages
+    become: true
+    become_method: sudo
+    apt:
+      name: "*"
+      state: latest
+      update_cache: yes
+      cache_valid_time: 30 #One day 
+    when: install_winehq == 1
+#---------------------------------------------------------------------------------------------
+  - name: ensure 'wine-stable' is at the latest version
+    become: true
+    become_method: sudo
+    apt:
+      name: wine-stable
+      state: latest
+    when: install_winehq == 1
+#---------------------------------------------------------------------------------------------
+  - name: ensure 'wine-stable' is at the latest version
+    become: true
+    become_method: sudo
+    command: "dpkg --add-architecture i386"
+    when: install_winehq == 1
+#---------------------------------------------------------------------------------------------
+  - name: update package repository
+    become: true
+    become_method: sudo
+    command: apt update
+    when: install_winehq == 1
+#---------------------------------------------------------------------------------------------
+  - name: ensure 'wine32' is at the latest version
+    become: true
+    become_method: sudo
+    apt:
+      name: wine32
+      state: latest
+    when: install_winehq == 1

@@ -1,0 +1,12 @@
+- name: install git
+  hosts: all
+  remote_user: "{{ssh_user}}"
+  tasks:
+#---------------------------------------------------------------------------------------------
+  - name: ensure 'git' is at the latest version
+    become: true
+    become_method: sudo
+    apt:
+      name: git
+      state: latest
+    when: install_git == 1

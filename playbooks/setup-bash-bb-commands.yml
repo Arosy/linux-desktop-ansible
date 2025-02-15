@@ -1,0 +1,60 @@
+- name: setup bash aliases
+  hosts: all
+  remote_user: "{{ssh_user}}"
+  tasks:
+#---------------------------------------------------------------------------------------------
+  - name: add 'bb2h' shortcut to aliases
+    blockinfile: 
+      state: present
+      insertafter: EOF
+      dest: /home/{{ssh_user}}/.bash_aliases
+      marker: "#<!-- bb2h-shortcut -->"
+      content: |
+        alias bb2h='sudo shutdown -P +120'
+    when: setup_bash_bb_commands == 1
+#---------------------------------------------------------------------------------------------
+  - name: add 'bb4h' shortcut to aliases
+    blockinfile:
+      state: present
+      insertafter: EOF
+      dest: /home/{{ssh_user}}/.bash_aliases
+      marker: "#<!-- bb4h-shortcut -->"
+      content: |
+        alias bb4h='sudo shutdown -P +240'
+    when: setup_bash_bb_commands == 1
+#---------------------------------------------------------------------------------------------
+  - name: add 'bb6h' shortcut to aliases
+    blockinfile:
+      state: present
+      insertafter: EOF
+      dest: /home/{{ssh_user}}/.bash_aliases
+      marker: "#<!-- bb6h-shortcut -->"
+      content: |
+        alias bb6h='sudo shutdown -P +360'
+    when: setup_bash_bb_commands == 1
+#---------------------------------------------------------------------------------------------
+  - name: add 'bb8h' shortcut to aliases
+    blockinfile:
+      state: present
+      insertafter: EOF
+      dest: /home/{{ssh_user}}/.bash_aliases
+      marker: "#<!-- bb8h-shortcut -->"
+      content: |
+        alias bb8h='sudo shutdown -P +480'
+    when: setup_bash_bb_commands == 1
+#---------------------------------------------------------------------------------------------
+  - name: add 'bbc' shortcut to aliases
+    blockinfile:
+      state: present
+      insertafter: EOF
+      dest: /home/{{ssh_user}}/.bash_aliases
+      marker: "#<!-- bbc-shortcut -->"
+      content: |
+        alias bbc='sudo shutdown -c'
+    when: setup_bash_bb_commands == 1
+#---------------------------------------------------------------------------------------------
+  - name: update visudo for '/usr/sbin/shutdown'
+    become: true
+    become_method: sudo
+    command: "echo \"{{ssh_user}} ALL=NOPASSWD:/usr/sbin/shutdown\" | sudo EDITOR=\"tee -a\" visudo"
+    when: setup_bash_bb_commands == 1

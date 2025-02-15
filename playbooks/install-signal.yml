@@ -1,0 +1,10 @@
+- name: install signal-desktop
+  hosts: all
+  remote_user: "{{ssh_user}}"
+  tasks:
+#---------------------------------------------------------------------------------------------
+  - name: installing signal-desktop via snap
+    become: true
+    become_method: sudo
+    command: snap install signal-desktop
+    when: install_signal == 1

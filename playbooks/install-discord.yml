@@ -1,0 +1,10 @@
+- name: install discord
+  hosts: all
+  remote_user: "{{ssh_user}}"
+  tasks:
+#---------------------------------------------------------------------------------------------
+  - name: ensure 'discord' is at the latest version
+    become: true
+    become_method: sudo
+    command: "snap install discord"
+    when: install_discord == 1

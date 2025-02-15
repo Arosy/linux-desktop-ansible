@@ -1,0 +1,40 @@
+- name: setup bash aliases
+  hosts: all
+  remote_user: "{{ssh_user}}"
+  tasks:
+#---------------------------------------------------------------------------------------------
+  - name: checking if '/home/{{ssh_user}}/.bash_aliases' exists
+    stat:
+      path: "/home/{{ssh_user}}/.bash_aliases"
+    register: has_alias_file
+    when: setup_bash_aliases == 1
+#---------------------------------------------------------------------------------------------
+  - name: creating '/home/{{ssh_user}}/.bash_aliases'
+    command: "touch /home/{{ssh_user}}/.bash_aliases"
+    when: setup_bash_aliases == 1 and not has_alias_file.stat.exists
+#---------------------------------------------------------------------------------------------
+  - name: add 'nscan' and 'scan_ip' shortcut to aliases
+    blockinfile: 
+      state: present
+      insertafter: EOF
+      dest: /home/{{ssh_user}}/.bash_aliases
+      marker: "#<!-- nmap-shortcuts -->"
+      content: |
+        alias nscanf6='nmap -T6 -F '
+        alias nscan6='nmap -T6 '
+        alias nscanf='nmap -T4 -F '
+        alias nscan='nmap -T4 '
+    when: setup_bash_aliases == 1 and install_nmap == 1
+#---------------------------------------------------------------------------------------------
+  - name: add 'search' shortcut to aliases
+    blockinfile:
+      state: present
+      insertafter: EOF
+      dest: /home/{{ssh_user}}/.bash_aliases
+      marker: "#<!-- search-shortcut -->"
+      content: |
+        alias search="egrep -ir $@"
+    when: setup_bash_aliases == 1
+
+
+

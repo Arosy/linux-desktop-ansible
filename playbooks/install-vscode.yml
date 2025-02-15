@@ -1,0 +1,10 @@
+- name: install vscode
+  hosts: all
+  remote_user: "{{ssh_user}}"
+  tasks:
+#---------------------------------------------------------------------------------------------
+  - name: ensure 'vscode' is at the latest version
+    become: true
+    become_method: sudo
+    command: "snap install code --classic"
+    when: install_vscode == 1

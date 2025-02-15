@@ -1,0 +1,53 @@
+- name: install zerotier
+  hosts: all
+  remote_user: "{{ssh_user}}"
+  tasks:
+#---------------------------------------------------------------------------------------------
+  - name: ensure curl is at the latest version
+    become: true
+    become_method: sudo
+    apt:
+      name: curl
+      state: latest
+    when: install_zerotier == 1
+#---------------------------------------------------------------------------------------------
+  - name: download zerotier installer
+    command: "curl -s https://install.zerotier.com"
+    register: zerotier_install_script
+    when: install_zerotier == 1
+#---------------------------------------------------------------------------------------------
+  - name: copy installer content to file
+    copy: content="{{zerotier_install_script.stdout}}" dest=/home/{{ssh_user}}/install_zerotier.sh
+    when: install_zerotier == 1
+#---------------------------------------------------------------------------------------------
+  - name: make '/home/{{ssh_user}}/install_zerotier.sh' executable
+    command: "chmod +x /home/{{ssh_user}}/install_zerotier.sh"
+    when: install_zerotier == 1
+#---------------------------------------------------------------------------------------------
+  - name: install zerotier
+    become: true
+    become_method: sudo
+    command: "./install_zerotier.sh"
+    args:
+      chdir: "/home/{{ssh_user}}"   
+    when: install_zerotier == 1
+#---------------------------------------------------------------------------------------------
+  - name: joining new network
+    become: true
+    become_method: sudo
+    command: "zerotier-cli join {{zerotier_network}}"
+    when: install_zerotier == 1 and zerotier_auto_join == 1
+#---------------------------------------------------------------------------------------------
+  - name: wait for zerotier member approval
+    wait_for:
+      host: "{{zerotier_ping_host}}"
+      port: "{{zerotier_ping_port}}"
+      state: started
+      delay: 5
+      connect_timeout: 15
+      timeout: 300
+    when: install_zerotier == 1 and zerotier_auto_join == 1
+#---------------------------------------------------------------------------------------------
+  - name: remove '/home/{{ssh_user}}/install_zerotier.sh'
+    command: "rm -f /home/{{ssh_user}}/install_zerotier.sh"
+    when: install_zerotier == 1
