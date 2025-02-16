@@ -10,8 +10,12 @@
     register: is_installed
     when: install_poe2_exchange == 1
 #---------------------------------------------------------------------------------------------
-  - name: "download 'Exiled-Exchange-2-0.6.2.AppImage'"
-    command: wget https://github.com/Kvan7/Exiled-Exchange-2/releases/download/v0.6.2/Exiled-Exchange-2-0.6.2.AppImage
+  - name: "download 'Exiled-Exchange-2-0.7.1.AppImage'"
+    command: wget https://github.com/Kvan7/Exiled-Exchange-2/releases/download/v0.7.1/Exiled-Exchange-2-0.7.1.AppImage
+    when: install_poe2_exchange == 1 and not is_installed.stat.exists
+#---------------------------------------------------------------------------------------------
+  - name: "make 'Exiled-Exchange-2-0.7.1.AppImage' executable"
+    command: chmod +x Exiled-Exchange-2-0.7.1.AppImage
     when: install_poe2_exchange == 1 and not is_installed.stat.exists
 #---------------------------------------------------------------------------------------------
   - name: "extract appimage contents"
@@ -36,8 +40,8 @@
     command: chmod 4755 /opt/exiled-exchange-2/chrome-sandbox
     when: install_poe2_exchange == 1 and not is_installed.stat.exists
 #---------------------------------------------------------------------------------------------
-  - name: "remove 'Exiled-Exchange-2-0.6.2.AppImage'"
-    command: rm -f Exiled-Exchange-2-0.6.2.AppImage
+  - name: "remove 'Exiled-Exchange-2-0.7.1.AppImage'"
+    command: rm -f Exiled-Exchange-2-0.7.1.AppImage
     when: install_poe2_exchange == 1 and not is_installed.stat.exists
 #---------------------------------------------------------------------------------------------
   - name: "prepare '~/.local/share/applications/poe2exchange.desktop' file"
