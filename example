@@ -20,7 +20,6 @@ ssh_user="arosy"
 #-------------------------
 ## amd radeon driver: 6.2.60203-1
 install_amdgpu=0                    ## Installs the GPU Display Driver for almost all modern AMD GPU's
-install_amdrocr=0                   ## Optionally you can configure your graphics driver to include rocr, which allows you to utilize ai workloads on your gpu instead of cpu only.
 install_winehq=0                    ##
 
 #-------------------------
@@ -43,7 +42,14 @@ install_vscode=0                    ## A Cross Platform Editor / Mini IDE made b
 install_git=0                       ## Git is king.
 
 #-------------------------
-## tools
+## AI PREREQUISITS
+#-------------------------
+install_ollama="docker"             ## Installs ollama on your system pass either: 'none', 'host' or 'docker' as value.             
+install_cuda=0                      ## When using NVIDIA Hardware this setting is required.
+install_amdrocr=0                   ## Optionally you can configure your graphics driver to include rocr, which allows you to utilize ai workloads on your gpu instead of cpu only.
+
+#-------------------------
+## TOOLS
 #-------------------------
 install_filezilla=0                 ## A popular windows ftp client
 install_rpi_imager=0                ## Used to flash images to raspberries and other sbcs.
@@ -55,7 +61,7 @@ install_kicad=0                     ##
 install_hyperhdr=0                  ## Open source ambient lighting implementation for television and music sets based on the video and audio streams analysis.
 
 #-------------------------
-## networking
+## NETWORKING
 #-------------------------
 install_zerotier=0                  ##
 install_nmap=0                      ## Utility which is used for a wide range of tasks such as network scanning.
@@ -89,6 +95,12 @@ setup_bash_aliases=0                ## See README.md where bash commands are exp
 setup_bash_bb_commands=0            ## A set of small shutdown commands used to plan shutdowns beforehand in an easy way.
 
 #-------------------------
+## FIREWALL CONFIGURATION
+#-------------------------
+config_firewall=0                   ## Optionally (but highly recommend) configure your system firewall to the most basic settings.
+network_cidr=192.168.2.0/24         ## A CIDR usually defines more than a single address, most of the users just need to adust the first three ip blocks.
+
+#-------------------------
 ## ZEROTIER ADVANCED CONFIGURATION
 #-------------------------
 ## Optionally join a private network which is managed by you or the
@@ -103,4 +115,4 @@ zerotier_ping_port=22
 #-------------------------
 ## PATH OF EXILE 2 - TOOLS
 #-------------------------
-install_poe2_exchange=0
+install_poe2_exchange=0             ##
